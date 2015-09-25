@@ -1,0 +1,22 @@
+<ion-view view-title="My Notes ({{ user.login }})" ng-controller="ListCtrl">
+  <ion-content>
+    <ion-list show-reorder="reordering">
+      <ion-item class="item-remove-animate item-icon-right"
+        href="#/edit/{{note.id}}"
+        ng-repeat="note in notes track by note.id" ng-if="note.filters == null">
+        <h2>{{note.title}}</h2>
+        <p>{{note.description}}</p>
+		<p>{{note.user}}</p>
+        <i class="icon ion-arrow-right-b"></i>
+        <ion-option-button class="button-assertive icon-left ion-trash-b"
+          ng-click="remove(note)">Delete</ion-option-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+  <div class="bar bar-footer bar-stable">
+    <a href="#/add"
+      class="button button-assertive icon-left ion-compose">New Note</a>
+    <button class="button button-light icon-left ion-ios-loop-strong"
+      ng-click="print()">Print</button>
+  </div>
+</ion-view>
