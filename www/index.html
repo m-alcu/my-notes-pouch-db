@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+	<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' https://couchdb-663779.smileupps.com http://placehold.it 'unsafe-inline' 'unsafe-eval'">
     <title></title>
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
@@ -11,10 +12,14 @@
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 	
 	
-	    <!-- userapp javascript sdks -->
+	<!-- userapp javascript sdks -->
     <script src="lib/userapp/userapp.client.js"></script>
     <script src="lib/userapp-angular/angularjs.userapp.js"></script>
     <script src="lib/userapp-phonegap/phonegap.userapp.js"></script>
+	<!-- momentjs javascript sdks -->
+	<script src="lib/moment/moment.js"></script>
+    <script src="lib/angular-moment/angular-moment.js"></script>
+	<script src="lib/moment/locale/es.js"></script>
 	<!-- pouchdb libraries -->
     <script src="lib/pouchdb/dist/pouchdb.js"></script>
     <script src="js/angular-pouchdb.js"></script>
@@ -22,6 +27,7 @@
 
 	
     <script src="cordova.js"></script>
+	<script src="lib/ngCordova/dist/ng-cordova.js"></script>
 	
 	
     <script src="js/notestore.js"></script>

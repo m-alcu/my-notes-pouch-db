@@ -39,6 +39,11 @@ angular.module('mynotes.notestore', ['pouchdb'])
 	      }
 	      return undefined;
 	    },
+		
+		getRemotedb: function() {
+			var db = new PouchDB('https://couchdb-663779.smileupps.com/' + dbName);
+			return db;
+		},
 
 	    create: function(note) {
 		  notes.$add(note);
@@ -50,10 +55,6 @@ angular.module('mynotes.notestore', ['pouchdb'])
 		  return;
 	    },
 
-		print: function() {
-		   console.log('print: '+angular.toJson(notes));
-		},
-		
 	    // move: function(note, fromIndex, toIndex) {
 	    	// notes.splice(fromIndex, 1);
 	    	// notes.splice(toIndex, 0, note);
