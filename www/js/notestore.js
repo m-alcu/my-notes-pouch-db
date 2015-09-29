@@ -16,7 +16,7 @@ angular.module('mynotes.notestore', ['pouchdb'])
 		  
 		sync: function() {
 //			sync = notes.$db.replicate.sync('https://couchdb-663779.smileupps.com/' + dbName, {live: true, retry: true})
-			sync = notes.$db.replicate.sync('https://couchdb-663779.smileupps.com/' + dbName, {live: true, retry: true, filter: 'app/by_user', query_params: { "user": window.localStorage['currentUser'] }})
+			sync = notes.$db.replicate.sync(window.localStorage['server'] + dbName, {live: true, retry: true, filter: 'app/by_user', query_params: { "user": window.localStorage['currentUser'] }})
           .on('error', function (err) {
             console.log("Syncing stopped");
             console.log(err);
@@ -41,7 +41,7 @@ angular.module('mynotes.notestore', ['pouchdb'])
 	    },
 		
 		getRemotedb: function() {
-			var db = new PouchDB('https://couchdb-663779.smileupps.com/' + dbName);
+			var db = new PouchDB(window.localStorage['server'] + dbName);
 			return db;
 		},
 

@@ -9,8 +9,10 @@ app.run(function($ionicPlatform, user, NoteStore, amMoment) {
   user.init({ appId: '55fb1d3fd5864' });
   
   user.getCurrent().then(function(currentUser) {
-	window.localStorage['currentUser'] = currentUser.login;  
-	console.log(currentUser.login);
+	window.localStorage['currentUser'] = currentUser.email;
+	window.localStorage['server'] = currentUser.properties.server.value;
+	window.localStorage['dbName'] = currentUser.properties.dbName.value;
+	console.log(angular.toJson(currentUser));
 	NoteStore.sync();	
   });  
   
@@ -18,6 +20,11 @@ app.run(function($ionicPlatform, user, NoteStore, amMoment) {
   
   
   $ionicPlatform.ready(function() {
+
+    if (window.cordova && window.cordova.plugins.Keyboard) {
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+    }  
+	  
     if(window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
@@ -76,7 +83,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/list');
 });
 
-app.controller('ListCtrl', function($scope, NoteStore, pouchCollection, user) {
+app.controller('ListCtrl', function($scope, NoteStore, pouchCollection, user, $ionicNavBarDelegate) {
+
+  $ionicNavBarDelegate.showBackButton(false);
 
   // $scope.reordering = false;
   $scope.notes = NoteStore.list();
@@ -91,18 +100,19 @@ app.controller('ListCtrl', function($scope, NoteStore, pouchCollection, user) {
 
 });
 
-app.controller('AddCtrl', function($scope, $state, NoteStore, user, $cordovaCamera, $cordovaImagePicker, $cordovaFile) {
+app.controller('AddCtrl', function($scope, $state, NoteStore, user, $cordovaCamera, $cordovaImagePicker, $cordovaFile, $ionicNavBarDelegate) {
 
-	user.getCurrent().then(function(currentUser) {
-		console.log(currentUser.login);
-		
-		$scope.note = {
+	$ionicNavBarDelegate.showBackButton(true);
+
+	console.log(window.localStorage['currentUser']);
+	
+	$scope.note = {
 		id: new Date().getTime().toString(),
 		title: '',
 		description: '',
-		user: currentUser.login
-		};		
-	});
+		user: window.localStorage['currentUser']
+	};		
+
 
 	$scope.pictureUrl = 'http://placehold.it/300x300';
 
@@ -179,7 +189,9 @@ app.controller('AddCtrl', function($scope, $state, NoteStore, user, $cordovaCame
   };
 });
 
-app.controller('EditCtrl', function($scope, $state, NoteStore, $cordovaCamera, $cordovaImagePicker, $cordovaFile) {
+app.controller('EditCtrl', function($scope, $state, NoteStore, $cordovaCamera, $cordovaImagePicker, $cordovaFile, $ionicNavBarDelegate) {
+
+	$ionicNavBarDelegate.showBackButton(true);
 
 	$scope.note = angular.copy(NoteStore.get($state.params.noteId));
 
@@ -268,17 +280,6 @@ app.controller('EditCtrl', function($scope, $state, NoteStore, $cordovaCamera, $
     NoteStore.update($scope.note);
     $state.go('list');
   };
-});
-
-app.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    if (window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-    }
-    if (window.StatusBar) {
-      StatusBar.styleDefault();
-    }
-  });
 });
 
 }());
