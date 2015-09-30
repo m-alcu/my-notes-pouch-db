@@ -2,9 +2,17 @@
   <ion-view title="Log In">
     <ion-content>
       <div class="padding" style="text-align: center; padding-top: 100px;">
-        <h2>Welcome to MyApp</h2>
+        <h2>Welcome to MyNotes</h2>
         <button class="button button-block button-positive icon-left ion-social-facebook" ua-oauth-link="facebook" style="background: #4c66a4;">
           <span ng-show="!loading">Log in with Facebook</span>
+          <i ng-show="loading" class="ion-loading-b"></i>
+        </button>
+        <button class="button button-block button-positive icon-left ion-social-google" ua-oauth-link="google" style="background: #dd4b39;">
+          <span ng-show="!loading">Log in with Google</span>
+          <i ng-show="loading" class="ion-loading-b"></i>
+        </button>
+        <button class="button button-block button-positive icon-left ion-social-linkedin" ua-oauth-link="linkedin" style="background: #007bb5;">
+          <span ng-show="!loading">Log in with Linkedin</span>
           <i ng-show="loading" class="ion-loading-b"></i>
         </button>
         <p class="text-center">
